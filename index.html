@@ -1,0 +1,289 @@
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link href="css/styles.css" type="text/css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.12.0.js"></script>
+        <script src="js/tree.js"></script>
+
+        <style>
+          body {
+            background-color: #f2f2f2;
+          }
+          .main {
+            height: 400px;
+          }
+          .first-question {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: green;
+          }
+          .final-message {
+            padding: 1em;
+          }
+          .final-message h2 {
+            text-align: center;
+          }
+          .callout {
+            float: right;
+            max-width: 525px;
+            margin: 1em;
+            padding: 0 1em;
+            border: 1px solid #ccc;
+          }
+        </style>
+
+        <script>
+          var maybe = {
+              answer: "Yes",
+              class: "red",
+              message: "A false statement I made may have caused harm to another.",
+              decisions: [
+              {
+                  answer: "Yes",
+                  class: "red",
+                  message: "You dummy. That's called libel or slander."
+              },
+              {
+                  answer: "No",
+                  class: "green",
+                  message: "Something I said incited violence, panic, or infringed public safety.",
+                  decisions: [
+                  {
+                      answer: "Yes",
+                      class: "blue",
+                      message: "What did you think was going to happen? That's not free speech violations either."
+                  },
+                  {
+                      answer: "No",
+                      class: "green",
+                      message: "I denied service based on race, gender, religion or any other protected category.",
+                      decisions: [
+                      {
+                          answer: "Yes",
+                          class: "red",
+                          message: "Which means you violated anti-discrimination laws. Nothing to do with free speech."
+                      },
+                      {
+                          answer: "No",
+                          class: "green",
+                          message: "I committed a crime, such as vandalism or graffiti, using hateful speech against race, gender, or any other protected category.",
+                          decisions: [
+                          {
+                              answer: "Yes",
+                              class: "red",
+                              message: "Of course you did, you little snowflake. Stop hating so much and maybe you won't commit hate crimes."
+                          },
+                          {
+                              answer: "No",
+                              class: "blue",
+                              message: "The language I used might have been considered obscene.",
+                              decisions: [
+                              {
+                                  answer: "Yes",
+                                  class: "red",
+                                  message: "Sorry there. The US provides lesser protection for obscenity. See the Miller Test."
+                              },
+                              {
+                                  answer: "No",
+                                  class: "orange",
+                                  message: "I was committing fraud, or deception for financial or other gain.",
+                                  decisions: [
+                                  {
+                                      answer: "Yes",
+                                      class: "black",
+                                      message: "You're a cheeky one, aren't you? The First Amendment doesn't cover fraud."
+                                  },
+                                  {
+                                      answer: "No",
+                                      class: "blue",
+                                      message: "I might have been violating copyright.",
+                                      decisions: [
+                                      {
+                                          answer: "Yes",
+                                          class: "red",
+                                          message: "Stop with the theft! Oh, and that's not covered by the First Amendment."
+                                      },
+                                      {
+                                          answer: "No",
+                                          class: "blue",
+                                          message: "Child pornography was involved.",
+                                          decisions: [
+                                          {
+                                              answer: "Yes",
+                                              class: "orange",
+                                              message: "But think of the children! Not protected speech."
+                                          },
+                                          {
+                                              answer: "No",
+                                              class: "blue",
+                                              message: "Was this commercial speech, such as advertising or labeling?",
+                                              decisions: [
+                                              {
+                                                  answer: "Why, yes it was",
+                                                  class: "black",
+                                                  message: "You don't like the fact that the First Amendment doesn't shield you from consumer protection laws, do you?"
+                                              },
+                                              {
+                                                  answer: "Nope",
+                                                  class: "green",
+                                                  message: "Were you threatening someone?",
+                                                  decisions: [
+                                                  {
+                                                      answer: "Damn straight, I was",
+                                                      class: "red",
+                                                      message: "Take some anger management classes. That's not free speech."
+                                                  },
+                                                  {
+                                                      answer: "Me? Never",
+                                                      class: "green",
+                                                      message: "Were you invading someone's privacy?",
+                                                      decisions: [
+                                                      {
+                                                          answer: "Well, I guess so",
+                                                          class: "black",
+                                                          message: "That's not very nice of you. Nor is it protected by the First Amendment."
+                                                      },
+                                                      {
+                                                          answer: "Not me",
+                                                          class: "green",
+                                                          message: "Was political spending involved?",
+                                                          decisions: [
+                                                          {
+                                                              answer: "I can neither confirm nor deny. But yes.",
+                                                              class: "blue",
+                                                              message: "Many classes of political spending are not covered."
+                                                          },
+                                                          {
+                                                              answer: "Come on already, no!",
+                                                              class: "orange",
+                                                              message: "It's possible that you may have a case. Hit the gym and lawyer up."
+                                                          }]
+                                                      }]
+                                                  }]
+                                              }]
+                                          }]
+                                      }]
+                                  }]
+                              }]
+                          }]
+                      }]
+                  }]
+              }]
+          };
+
+          var data = {
+              message: "<div class='first-question'>Is my freedom of speech being violated?</div>",
+              decisions: [
+              {
+                  answer: "I am in jail for something I said.",
+                  class: "orange",
+                  message: "My charges are actually related to what I said.",
+                  decisions: [
+                      maybe,
+                      {
+                          answer: "No",
+                          class: "green",
+                          message: "No freedom of speech violation for you, bubs!"
+                      }
+                  ]
+              },
+              {
+                  answer: "I am not in jail.",
+                  class: "black",
+                  message: "I am facing legal repercussions for something I said.",
+                  decisions: [
+                      {
+                          answer: "No",
+                          class: "green",
+                          message: "Don't be a dumdum. Freedom of speech only protects against legal repercussions."
+                      },
+                      maybe
+                  ]
+              }]
+          };
+
+          $(document).ready(function() {
+              $('.main').decisionTree({
+                            data: data,
+                            animationSpeed: "slow",
+                            animation: "slide-up",
+                            finalClass: "final-message"
+                         });
+          });
+        </script>
+
+    </head>
+    <body>
+        <div class="main"></div>
+        <div class="final-message">
+            <h2>Wanna know more about free speech?</h2>
+            <div class="callout">
+              <h4>Freedom of speech includes the right:</h4>
+              <ul>
+                  <li>
+                      Not to speak (specifically, the right not to salute the flag).<br><em>West Virginia Board of Education v. Barnette</em>, 319 U.S. 624 (1943).
+                  </li>
+                  <li>
+                      Of students to wear black armbands to school to protest a war (“Students do not shed their constitutional rights at the schoolhouse gate.”).<br><em>Tinker v. Des Moines</em>, 393 U.S. 503 (1969).
+                  </li>
+                  <li>
+                      To use certain offensive words and phrases to convey political messages.<br><em>Cohen v. California</em>, 403 U.S. 15 (1971).
+                  </li>
+                  <li>
+                      To contribute money (under certain circumstances) to political campaigns.<br><em>Buckley v. Valeo</em>, 424 U.S. 1 (1976).
+                  </li>
+                  <li>
+                      To advertise commercial products and professional services (with some restrictions).<br><em>Virginia Board of Pharmacy v. Virginia Consumer Council</em>, 425 U.S. 748 (1976);&nbsp;<em>Bates v. State Bar of Arizona</em>, 433 U.S. 350 (1977).
+                  </li>
+                  <li>
+                      To engage in symbolic speech, (e.g., burning the flag in protest).<br><em>Texas v. Johnson</em>, 491 U.S. 397 (1989);&nbsp;<em>United States v. Eichman</em>, 496 U.S. 310 (1990).
+                  </li>
+              </ul>
+              <h4>Freedom of speech does not include the right:</h4>
+              <ul>
+                  <li>
+                      To incite actions that would harm others (e.g., “[S]hout[ing] ‘fire’ in a crowded theater.”).<br><em>Schenck v. United States,</em> 249 U.S. 47 (1919).
+                  </li>
+                  <li>
+                      To make or distribute obscene materials.<br><em>Roth v. United States</em>, 354 U.S. 476 (1957).
+                  </li>
+                  <li>
+                      To burn draft cards as an anti-war protest.<br><em>United States v. O’Brien</em>, 391 U.S. 367 (1968).
+                  </li>
+                  <li>
+                      To permit students to print articles in a school newspaper over the objections of the school administration.&nbsp;<br><em>Hazelwood School District v. Kuhlmeier</em>, 484 U.S. 260 (1988).
+                  </li>
+                  <li>
+                      Of students to make an obscene speech at a school-sponsored event.<br><em>Bethel School District #43 v. Fraser</em>, 478 U.S. 675 (1986).
+                  </li>
+                  <li>
+                      Of students to advocate illegal drug use at a school-sponsored event.<br><em>Morse v. Frederick, __ U.S. __</em> (2007).
+                  </li>
+              </ul>
+              <div class="credits"><a href="http://www.uscourts.gov/about-federal-courts/educational-resources/about-educational-outreach/activity-resources/what-does">source</a></div>
+            </div>
+            <p>
+      	      In the United States, freedom of speech and expression is strongly
+      	      protected from government restrictions by the First Amendment to
+      	      the Constitution. This constitutional right of free speech only
+      	      prevents <em>government restrictions</em> on speech, not
+      	      restrictions imposed by private individuals or businesses unless
+      	      they are governmental institutions acting on behalf of the
+      	      government.
+            </p>
+            <p>
+      	      Many laws exist to restrict the ability of private businesses and
+      	      individuals from restricting the speech of others, such as employment
+      	      laws that restrict employers' ability to prevent employees from
+      	      disclosing their salary with coworkers or attempting to organize a
+      	      labor union. <em>These laws are not the First Amendment</em> and
+      	      these protections are not imposed by the First Amendment.
+            </p>
+            <p>
+              In summary, if you're not in jail or being arrested, then your
+              First Amendment freedom of speech is probably not being infringed.
+            </p>
+        </div>
+    </body>
+</html>
